@@ -21,7 +21,8 @@ def has_valid_credentials_github():
     # Navegación a la página de login de GitHub
     driver.get("https://github.com/login")
 
-    # Credenciales de usuario de prueba
+    # Credenciales de usuario de prueba. Puedes poner el tuyo de prueba.
+    # Yo he probado y ha saltado el 2FA, razón de más para habilitarlo.
     usuario = "testuser"
     password = "password"
 
@@ -86,6 +87,7 @@ def has_valid_credentials(instance):
     # Intenta obtener el token CSRF para la autenticación
     try:
         token = re.search(r"user_token' value='([0-9a-f]+)'", response.text).group(1)
+        print("[+] Obtención del token CSRF exitosa. {token}")
     except Exception as e:
         print(f"[!] Error al obtener el token CSRF: {e}")
         return False
