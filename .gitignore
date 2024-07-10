@@ -121,7 +121,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+2_1_4_multithreading_python/.env
 .venv
 env/
 venv/
@@ -160,3 +160,12 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+2_1_1_shodan_python/.env
+2_1_2_auth_login_automatizado/.env
+2_1_3_auth_login_selenium/.env
+2_2_waybackmachine/.env
+2_3_dns_enumeration/.env
+2_4_whois_enumeration/.env
+2_5_ip_geolocation/.env
+2_6_phone_geolocation/.env
+2_7_metadata_analyzer/.env
