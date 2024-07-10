@@ -59,7 +59,7 @@ def pintar_mapa(localizacion, filename="phone_map.html"):
 
 if __name__ == "__main__":
     # Ejemplo de uso del script
-    numero = "689545600"
+    numero = "+34667519829"
     info = obtener_info_telefono(numero)
     print(info)
 

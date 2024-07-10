@@ -167,5 +167,7 @@ cython_debug/
 2_3_dns_enumeration/.env
 2_4_whois_enumeration/.env
 2_5_ip_geolocation/.env
+2_5_ip_geolocation/map.html
 2_6_phone_geolocation/.env
 2_7_metadata_analyzer/.env
+3_6_escaneo_priorizacion_IA/.env

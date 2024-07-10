@@ -16,7 +16,7 @@ def obtener_informacion_whois(dominio):
     """
     if not dominio:
         raise ValueError("El nombre de dominio no puede estar vacío.")
-
+    print(f"dominio is {dominio}\n")
     response = whois.whois(dominio)  # Realiza la consulta WHOIS.
     return response
 

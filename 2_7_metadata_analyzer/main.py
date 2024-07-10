@@ -19,5 +19,5 @@ def display_metadata(filepath):
 
 
 if __name__ == "__main__":
-    filepath = "/home/kali/python_hacking/seccion2/2_7_metadata_analyzer/Descargas/DSCN0010.jpg"
+    filepath = "/Users/aironman/git/shodan-Santiago/2_7_metadata_analyzer/Hoja de fórmulas.pdf"
     display_metadata(filepath)

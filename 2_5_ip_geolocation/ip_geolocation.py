@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import sys
 import folium
-
+import subprocess
 # Cargar las variables de entorno desde un archivo .env
 load_dotenv()
 
@@ -12,6 +12,7 @@ ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 # Dirección IP para obtener detalles geográficos
 IP_ADDR = "79.116.189.204"
+mi_ip = subprocess.check_output("curl -s ifconfig.me", shell=True).decode().strip()
 
 def draw_map(latitude, longitude, location, filename="map.html"):
     """
@@ -55,7 +56,8 @@ def get_ip_details(ip_addr, access_token):
 
 
 if __name__ == "__main__":
-    details = get_ip_details(IP_ADDR, ACCESS_TOKEN)
+
+    details = get_ip_details(mi_ip, ACCESS_TOKEN)
     
     # Imprimir los detalles de la IP obtenidos
     for key, value in details.items():

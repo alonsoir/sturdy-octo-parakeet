@@ -1,0 +1,14 @@
+requests~=2.32.3
+urllib3~=2.2.2
+waybackpy~=3.0.6
+ipinfo~=5.0.1
+folium~=0.17.0
+python-dotenv~=1.0.1
+shodan~=1.31.0
+dnspython~=2.6.1
+whois~=1.20240129.2
+phonenumbers~=8.13.40
+geopy~=2.4.1
+docx~=0.2.4
+pillow~=10.4.0
+selenium~=4.22.0

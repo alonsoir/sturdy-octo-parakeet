@@ -8,6 +8,7 @@ def resolve_dns_records(domain, record_types):
         domain (str): El dominio para el cual resolver los registros DNS.
         record_types (list): Lista de tipos de registros DNS a resolver.
     """
+    print(f"target_domain is {domain}\n")
     # Crea una instancia de Resolver para consultar los servidores DNS
     resolver = dns.resolver.Resolver()
 
