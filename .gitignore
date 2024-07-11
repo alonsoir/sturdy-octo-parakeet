@@ -171,3 +171,11 @@ cython_debug/
 2_6_phone_geolocation/.env
 2_7_metadata_analyzer/.env
 3_6_escaneo_priorizacion_IA/.env
+../4_3_1_escaner_Nessus_creacion_sesion/.env
+../4_3_2_escaner_Nessus_creacion_escaneo/.env
+../4_3_3_escaner_Nessus_resultados/.env
+../5_4_2_one_liner_IA/.env
+../7_2_1_zap_analyzer/.env
+../7_2_2_zap_analisis_pasivo/.env
+../7_2_3_zap_analisis_activo/.env!
+../5_5_https_reverse_shell/server.pem
