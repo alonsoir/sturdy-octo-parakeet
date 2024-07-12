@@ -1,3 +1,4 @@
+import json
 from dotenv import load_dotenv
 import os
 import requests
@@ -5,6 +6,7 @@ import urllib3
 
 # Suprimir advertencias relacionadas con certificados no verificados
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 class NessusScanner:
     """Representa un escáner que interactúa con la API de Nessus para realizar y gestionar escaneos de vulnerabilidades."""
@@ -16,6 +18,8 @@ class NessusScanner:
         self.username = os.getenv("NESSUS_USERNAME")
         self.password = os.getenv("NESSUS_PASSWORD")
         self.token = None
+        self.accessKey = os.getenv("NESSUS_ACCESS_KEY")
+        self.secretKey = os.getenv("NESSUS_SECRET_KEY")
 
     def create_session(self):
         """Crea una sesión en Nessus y almacena el token de sesión.
@@ -23,7 +27,8 @@ class NessusScanner:
         Returns:
             bool: True si la sesión se crea exitosamente, False de lo contrario.
         """
-        response = requests.post(f"{self.base_url}/session", json={"username": self.username, "password": self.password}, verify=False)
+        response = requests.post(f"{self.base_url}/session",
+                                 json={"username": self.username, "password": self.password}, verify=False)
         if response.status_code == 200:
             self.token = response.json()['token']
         else:
@@ -37,7 +42,7 @@ class NessusScanner:
             print("No hay token de sesión. Iniciando sesión...")
             if not self.create_session():
                 return
-        
+
         headers = {"X-Cookie": f"token={self.token};"}
         response = requests.get(f"{self.base_url}/policies", headers=headers, verify=False)
         if response.status_code == 200:
@@ -46,7 +51,8 @@ class NessusScanner:
         else:
             print(f"Error al obtener las políticas: {response.status_code} - {response.text}")
 
-    def create_scan(self, uuid, scan_name, text_targets, policy_id=None, description="", enabled=True, launch="ON_DEMAND"):
+    def create_scan(self, uuid, scan_name, text_targets, policy_id=None, description="", enabled=True,
+                    launch="ON_DEMAND"):
         """Crea un nuevo escaneo en Nessus.
 
         Args:
@@ -62,7 +68,7 @@ class NessusScanner:
             print("No hay token de sesión. Iniciando sesión...")
             if not self.create_session():
                 return
-        
+
         scan_settings = {
             "uuid": uuid,
             "settings": {
@@ -76,10 +82,23 @@ class NessusScanner:
             }
         }
 
-        headers = {"X-Cookie": f"token={self.token};"}
+        headers = {
+            "X-Cookie": f"token={self.token};",
+            "X-ApiKeys": f"accessKey={self.accessKey}; secretKey={self.secretKey}"
+        }
+        print(headers)
         response = requests.post(f"{self.base_url}/scans", json=scan_settings, headers=headers, verify=False)
 
         if response.status_code == 200:
             scan = response.json()
+            print("Escaneo creado", json.dumps(scan, indent=4))
         else:
             print(f"Error al crear el escaneo en Nessus: {response.status_code} - {response.text}")
+
+
+# Invocación del escáner Nessus
+scanner_nessus = NessusScanner()
+# Obtener las políticas
+scanner_nessus.get_policies()
+# Crear un escaneo
+scanner_nessus.create_scan("1234567890", "Test Scan", "192.168.1.1")
