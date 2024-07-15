@@ -46,6 +46,7 @@ class SSHConnector:
         Returns:
             bool: True si la conexión es exitosa, False en caso contrario.
         """
+        print(f"Testing self.hostname: {self.hostname} self.username: {self.username} password: {password}\n")
         self.client = paramiko.SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
@@ -78,7 +79,8 @@ class SSHConnector:
         Args:
             password_file (str): Ruta al archivo de texto que contiene las contraseñas.
         """
-        with open(password_file, 'r') as archivo:
+        print(f"password_file: {password_file}\n")
+        with open(password_file, 'r', encoding='latin-1') as archivo:
             passwords = [line.strip() for line in archivo.readlines()]
 
         # Ejecución en paralelo
@@ -90,6 +92,7 @@ class SSHConnector:
 if __name__ == "__main__":
     hostname = "192.168.138.130"
     username = "vagrant"
+    # password_file = "rockyou.txt"
     password_file = "passwords.txt"
     connector = SSHConnector(hostname, username)
     connector.test_password(password_file)

