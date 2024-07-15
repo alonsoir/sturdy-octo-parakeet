@@ -14,8 +14,9 @@ class SiteMapSpider(scrapy.Spider):
         tree (networkx.DiGraph): Grafo dirigido que representa la estructura del sitio web.
     """
     name = "sitemapper"
-    allowed_domains = ["192.168.138.129"]
-    start_urls = ["http://192.168.138.129:1336/index.php"]
+    # http://43.202.238.66/login.php
+    allowed_domains = ["43.202.238.66"]
+    start_urls = ["http://43.202.238.66/login.php"]
 
     def __init__(self):
         """Inicializa el spider y el grafo dirigido."""

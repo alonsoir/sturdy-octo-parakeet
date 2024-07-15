@@ -1,6 +1,10 @@
 from scapy.all import *
 import time
 
+from scapy.layers.dhcp import DHCP
+from scapy.layers.l2 import Ether
+
+
 class DHCPListener:
     """
     Clase para escuchar y procesar paquetes DHCP en la red.

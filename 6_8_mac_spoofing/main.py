@@ -29,11 +29,14 @@ def main():
         new_mac = input("Introduce la nueva dirección MAC (o escribe 'aleatoria' para generar una): ")
         if new_mac.lower() == 'aleatoria':
             new_mac = mac_spoofer.generate_random_mac()
-        
+            actual_mac = mac_spoofer.get_current_mac()
+            print(f"La direccion MAC actual es: {actual_mac}\n")
+            print(f"La dirección MAC aleatoria generada es: {new_mac}\n")
         # Valida y cambia la dirección MAC
         if mac_spoofer.validate_mac(new_mac):
             mac_spoofer.change_mac(new_mac)
             updated_mac = mac_spoofer.get_current_mac()
+            print(f"La direccion MAC actual es: {updated_mac}\n")
             if updated_mac == new_mac:
                 print(f"La dirección MAC fue cambiada exitosamente a {updated_mac}")
             else:
