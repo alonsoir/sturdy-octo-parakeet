@@ -8,6 +8,7 @@ import shutil
 from datetime import datetime, timedelta
 from win32crypt import CryptUnprotectData
 
+
 class ChromePasswordDecryptor:
     """Clase para descifrar contraseñas guardadas en Google Chrome."""
 
@@ -15,8 +16,16 @@ class ChromePasswordDecryptor:
         """Inicializa el objeto ChromePasswordDecryptor estableciendo la ruta a la base de datos
         de contraseñas de Chrome y obteniendo la clave de cifrado.
         """
-        self.db_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local",
-                                    "Google", "Chrome", "User Data", "default", "Login Data")
+        self.db_path = os.path.join(
+            os.environ["USERPROFILE"],
+            "AppData",
+            "Local",
+            "Google",
+            "Chrome",
+            "User Data",
+            "default",
+            "Login Data",
+        )
         self.key = self.get_encryption_key()
 
     def get_encryption_key(self):
@@ -25,10 +34,17 @@ class ChromePasswordDecryptor:
         Returns:
             bytes: Clave de cifrado descifrada.
         """
-        local_state_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local",
-                                        "Google", "Chrome", "User Data", "Local State")
+        local_state_path = os.path.join(
+            os.environ["USERPROFILE"],
+            "AppData",
+            "Local",
+            "Google",
+            "Chrome",
+            "User Data",
+            "Local State",
+        )
         try:
-            with open(local_state_path, 'r', encoding='utf-8') as file:
+            with open(local_state_path, "r", encoding="utf-8") as file:
                 local_state = json.loads(file.read())
             key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
             key = key[5:]  # Elimina los primeros 5 bytes, que no son necesarios
@@ -83,7 +99,9 @@ class ChromePasswordDecryptor:
             shutil.copyfile(self.db_path, temp_db_path)
             with sqlite3.connect(temp_db_path) as db:
                 cursor = db.cursor()
-                cursor.execute("SELECT origin_url, action_url, username_value, password_value, date_created, date_last_used FROM logins ORDER BY date_created")
+                cursor.execute(
+                    "SELECT origin_url, action_url, username_value, password_value, date_created, date_last_used FROM logins ORDER BY date_created"
+                )
 
                 for row in cursor.fetchall():
                     yield {
@@ -92,7 +110,7 @@ class ChromePasswordDecryptor:
                         "username": row[2],
                         "password": self.decrypt_password(row[3]),
                         "date_created": self.get_chrome_datetime(row[4]),
-                        "date_last_used": self.get_chrome_datetime(row[5])
+                        "date_last_used": self.get_chrome_datetime(row[5]),
                     }
         except Exception as e:
             logging.error(f"Error al extraer las passwords de Chrome: {e}")
@@ -102,12 +120,16 @@ class ChromePasswordDecryptor:
             except Exception as e:
                 logging.error(f"Error al eliminar la base de datos temporal: {e}")
 
+
 def main():
     """Función principal que inicializa el descifrado y muestra las contraseñas guardadas."""
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(
+        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     decryptor = ChromePasswordDecryptor()
     for password_info in decryptor.extract_saved_passwords():
         print(password_info)
+
 
 if __name__ == "__main__":
     main()
